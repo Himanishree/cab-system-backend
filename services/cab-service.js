@@ -1,4 +1,5 @@
 const { DijkstraCalculator } = require('dijkstra-calculator');
+const Cab = require('../models/cab-model');
 
 const graph = new DijkstraCalculator();
 graph.addVertex('A');
@@ -25,6 +26,14 @@ function addWeight(path) {
     return weight;
 }
 
+function addArrivingTime(cabList) {
+    const cabListWithArrivingTime = cabList.map((e) => {
+        return { arrivingTime: Math.floor(Math.random() * 10), ...e }
+    })
+
+    return cabListWithArrivingTime;
+}
+
 class CabServices {
     getShortestDistance(pickup, destination) {
         const path = graph.calculateShortestPath(pickup, destination);
@@ -36,7 +45,18 @@ class CabServices {
         return addWeight(path);
     }
 
+    async getAllCabs() {
+        let cabList = await Cab.find()
+            .select('cab driver pricePerMinute rating avatar')
+            .lean();
+        cabList = addArrivingTime(cabList);
+        return cabList;
+    }
 
+    async addCab(cab, driver, pricePerMinute, rating, avatar) {
+        const generatedCab = await Cab.create({ cab, driver, pricePerMinute, rating, avatar })
+        return generatedCab;
+    }
 }
 
 
