@@ -5,5 +5,6 @@ const cabController = require("../controllers/cab-controller");
 router.post("/api/cab-list", cabController.sendAvailableCab)
 router.post("/api/add-cab", cabController.addCab);
 router.post("/api/book-cab", bookingController.bookCab);
+router.post('/api/get-all-bookings', bookingController.getAllBookings);
 
 module.exports = router;

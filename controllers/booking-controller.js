@@ -19,6 +19,19 @@ class BookingController {
         }
     }
 
+    async getAllBookings(req, res) {
+
+        const { email } = req.body;
+
+        try {
+            const bookings = await bookingService.getAllBookings({ email });
+            APIResponse.successResponseWithData(res, bookings, 'All bookings fetched successfully');
+        } catch (err) {
+            console.log(err)
+            res.status(500).json({ msg: 'Internal Server Error' })
+        }
+    }
+
 }
 
 module.exports = new BookingController()

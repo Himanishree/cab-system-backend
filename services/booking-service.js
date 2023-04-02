@@ -6,6 +6,11 @@ class BookingService {
         const generatedBooking = await Booking.create({ cabId, pickup, destination, email, price })
         return generatedBooking;
     }
+
+    async getAllBookings(data) {
+        const bookings = await Booking.find(data).populate('cabId');
+        return bookings;
+    }
 }
 
 
