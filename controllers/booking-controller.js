@@ -11,6 +11,12 @@ class BookingController {
         }
 
         try {
+
+            const isCabBooked = await bookingService.isCabBooked({ cabId, pickup, destination });
+            if (isCabBooked) {
+                return APIResponse.validationError(res, 'Cab already booked for this route')
+            }
+
             const generatedBooking = await bookingService.bookCab(cabId, pickup, destination, email, price);
             APIResponse.successResponseWithData(res, generatedBooking, 'Cab booked successfully');
         } catch (err) {

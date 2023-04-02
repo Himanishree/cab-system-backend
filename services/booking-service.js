@@ -11,6 +11,11 @@ class BookingService {
         const bookings = await Booking.find(data).populate('cabId');
         return bookings;
     }
+
+    async isCabBooked({ cabId, pickup, destination }) {
+        const bookings = await Booking.find({ cabId, pickup, destination });
+        return bookings.length > 0 ? true : false;
+    }
 }
 
 
