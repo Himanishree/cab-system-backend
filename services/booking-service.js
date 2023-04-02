@@ -12,8 +12,8 @@ class BookingService {
         return bookings;
     }
 
-    async isCabBooked({ cabId, pickup, destination }) {
-        const bookings = await Booking.find({ cabId, pickup, destination });
+    async isCabBooked({ pickup, destination }) {
+        const bookings = await Booking.find({ pickup, destination });
         return bookings.length > 0 ? true : false;
     }
 }
